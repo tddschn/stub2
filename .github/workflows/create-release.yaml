@@ -12,10 +12,11 @@ jobs:
         env:
           # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: "${{ github.token }}"
+          REPO: "${{ github.repository }}"
         run: |
           set +e
           # don't exit on error
-          gh release create test-release --notes "Release from GitHub Actions"
+          gh release create -R "${REPO}" test-release --notes "Release from GitHub Actions"
           set -e
 
-          gh release upload test-release stub.txt
+          gh release upload -R "${REPO}" test-release stub.txt
