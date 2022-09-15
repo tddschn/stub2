@@ -1,0 +1,21 @@
+name: Try to create a release
+on: workflow_call
+jobs:
+  create_release:
+    name: Create a release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make a stub file
+        run: |
+          echo "This is a stub file" > stub.txt
+      - name: Create a release
+        env:
+          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: "${{ github.token }}"
+        run: |
+          set +e
+          # don't exit on error
+          gh release create test-release --notes "Release from GitHub Actions"
+          set -e
+
+          gh release upload test-release stub.txt
