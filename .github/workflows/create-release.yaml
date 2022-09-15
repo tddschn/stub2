@@ -12,6 +12,7 @@ jobs:
         run: |
           echo "This is a stub file" > stub.txt
       - name: Create a release
+        continue-on-error: true
         env:
           # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # GH_TOKEN: "${{ github.token }}"
@@ -24,3 +25,9 @@ jobs:
           set -e
 
           gh release upload -R "${REPO}" test-release stub.txt
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: stub-txt
+          path: |
+            stub.txt
